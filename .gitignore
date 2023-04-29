@@ -28,6 +28,8 @@ hs_err_pid*
 *.iml
 *.ipr
 
+secrets.properties
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
