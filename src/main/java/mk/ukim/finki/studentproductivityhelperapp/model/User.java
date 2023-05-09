@@ -8,10 +8,10 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+@Table
 @Data
 @Entity
 public class User implements UserDetails {
-
     @Id
     private Long UserId;
     private String FirstName;
@@ -65,9 +65,9 @@ public class User implements UserDetails {
 
     }
 
-    public User(Long userId, String firstName, String lastName,
+    public User( String firstName, String lastName,
                 String username, String email, String password) {
-        UserId = userId;
+
         FirstName = firstName;
         LastName = lastName;
         Username = username;

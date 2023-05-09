@@ -1,6 +1,7 @@
 package mk.ukim.finki.studentproductivityhelperapp.model;
 
 
+
 import lombok.Data;
 
 import javax.persistence.Entity;
