@@ -1,5 +1,6 @@
 package mk.ukim.finki.studentproductivityhelperapp.service.impl;
 
+
 import mk.ukim.finki.studentproductivityhelperapp.model.User;
 import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.EmailAlreadyExistsException;
 import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.InvalidUsernameOrPasswordException;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class UserServiceImpl implements UserService {
