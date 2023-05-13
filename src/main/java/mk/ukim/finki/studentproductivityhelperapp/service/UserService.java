@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface UserService extends UserDetailsService {
 
-    User register(String username, String password, String repeatPassword, String FirstName, String LastName,
-                  String Email);
+//    User register(String username, String password, String repeatPassword, String FirstName, String LastName,
+//                  String Email);
+
+//    User create(User user);
 }

@@ -23,11 +23,5 @@ public class StudentProductivityHelperAppApplication {
 		SpringApplication.run(StudentProductivityHelperAppApplication.class, args);
 	}
 
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(10);
-	}
-
-
 
 }

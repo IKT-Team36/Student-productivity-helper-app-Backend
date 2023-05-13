@@ -1,30 +1,47 @@
 package mk.ukim.finki.studentproductivityhelperapp.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
+@NoArgsConstructor
 @Entity
-@RequiredArgsConstructor
 public class User implements UserDetails {
 
-    private String FirstName;
-    private String LastName;
-    @Column(unique = true)
     @Id
-    private String Username;
+    @SequenceGenerator(
+            name = "student_sequence",
+            sequenceName = "student_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "student_sequence"
+    )
+    private Long id;
+
     @Column(unique = true)
     private String Email;
     private String Password;
+    @Enumerated(EnumType.STRING)
+    private AppUserRole role;
+
+    private String FirstName;
+    private String LastName;
+
+    private Boolean locked;
+    private Boolean enabled;
+
     @OneToMany
     private List<Course> courses;
     @OneToMany
@@ -48,58 +65,42 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
+        return Collections.singleton(authority);
+    }
+
+    @Override
+    public String getUsername() {
+        return Email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return isAccountNonExpired;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return isAccountNonLocked;
+        return !locked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return isCredentialsNonExpired;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return isEnabled;
+        return enabled;
     }
 
-//    public User(Long userId, String firstName, String lastName, String username, String email, String password, List<Course> courses, List<Topic> topics, List<Event> events, List<Log> logs, List<Attachment> attachments, List<Note> notes, List<ToDo> toDos, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
-//        UserId = userId;
-//        FirstName = firstName;
-//        LastName = lastName;
-//        Username = username;
-//        Email = email;
-//        Password = password;
-//        this.courses = courses;
-//        this.topics = topics;
-//        this.events = events;
-//        this.logs = logs;
-//        this.attachments = attachments;
-//        this.notes = notes;
-//        this.toDos = toDos;
-//        this.isAccountNonExpired = isAccountNonExpired;
-//        this.isAccountNonLocked = isAccountNonLocked;
-//        this.isCredentialsNonExpired = isCredentialsNonExpired;
-//        this.isEnabled = isEnabled;
-//    }
-//
-    public User(String firstName, String lastName,
-                String username, String email, String password) {
-
-        FirstName = firstName;
-        LastName = lastName;
-        Username = username;
+    public User(String email, String password, AppUserRole role, String firstName, String lastName, Boolean locked, Boolean enabled) {
         Email = email;
         Password = password;
+        this.role = role;
+        FirstName = firstName;
+        LastName = lastName;
+        this.locked = locked;
+        this.enabled = enabled;
     }
-
-
 }

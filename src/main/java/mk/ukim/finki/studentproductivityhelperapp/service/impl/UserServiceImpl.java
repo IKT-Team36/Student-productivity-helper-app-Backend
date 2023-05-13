@@ -26,23 +26,39 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
-    public User register(String username, String password, String repeatPassword, String FirstName, String LastName, String Email) {
-        if (username==null || username.isEmpty()  || password==null || password.isEmpty() || Email.isEmpty())
-            throw new InvalidUsernameOrPasswordException();
-        if (!password.equals(repeatPassword))
-            throw new PasswordsDoNotMatchException();
-        if(this.userRepository.findByUsername(username).isPresent())
-            throw new UsernameAlreadyExistsException(username);
-        if(this.userRepository.findByEmail(Email).isPresent())
-            throw new EmailAlreadyExistsException(Email);
-        User user = new User(username,passwordEncoder.encode(password),FirstName,LastName,Email);
-        return userRepository.save(user);
-    }
+
+//    @Override
+//    public User register(String username, String password, String repeatPassword, String FirstName, String LastName, String Email) {
+//        if (username==null || username.isEmpty()  || password==null || password.isEmpty() || Email.isEmpty())
+//            throw new InvalidUsernameOrPasswordException();
+//        if (!password.equals(repeatPassword))
+//            throw new PasswordsDoNotMatchException();
+//        if(this.userRepository.findByUsername(username).isPresent())
+//            throw new UsernameAlreadyExistsException(username);
+//        if(this.userRepository.findByEmail(Email).isPresent())
+//            throw new EmailAlreadyExistsException(Email);
+//        User user = new User(username,passwordEncoder.encode(password),FirstName,LastName,Email);
+//        return userRepository.save(user);
+//    }
+
+//    @Override
+//    public User create(User user) {
+//        // Check if the username is already taken
+//        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+//            throw new UsernameAlreadyExistsException("Username already exists");
+//        }
+//
+//        // Encrypt the user's password
+//        String encodedPassword = passwordEncoder.encode(user.getPassword());
+//        user.setPassword(encodedPassword);
+//
+//        // Save the user to the database
+//        return userRepository.save(user);
+//    }
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException(username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException(email));
     }
 }
