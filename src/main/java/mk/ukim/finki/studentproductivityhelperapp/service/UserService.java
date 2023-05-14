@@ -13,4 +13,6 @@ public interface UserService extends UserDetailsService {
 //                  String Email);
 
 //    User create(User user);
+List<User> findAll();
+    public String signUpUser(User user);
 }

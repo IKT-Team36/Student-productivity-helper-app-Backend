@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -60,5 +62,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException(email));
+    }
+
+    public List<User> findAll() {
+        return this.userRepository.findAll();
+    }
+
+    @Override
+    public String signUpUser(User user) {
+        boolean userExists = userRepository.findByEmail(user.getEmail()).isPresent();
+        if(userExists)
+        {
+            throw new IllegalStateException("email already taken");
+        }
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+        return "works";
     }
 }

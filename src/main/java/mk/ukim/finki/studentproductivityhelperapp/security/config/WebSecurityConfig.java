@@ -27,7 +27,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @EnableWebSecurity
 @AllArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class WebSecurityConfig {
     private final UserService userService;
@@ -37,7 +36,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeHttpRequests((authz) -> authz.requestMatchers("/api/v*/registration/**").permitAll()
+        http.authorizeHttpRequests((authz) -> authz.requestMatchers("/api/registration/*").permitAll()
                         .anyRequest().authenticated())
                 .formLogin();
         return http.build();
@@ -50,7 +49,7 @@ public class WebSecurityConfig {
 //    }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager2(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 

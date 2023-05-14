@@ -1,23 +1,32 @@
 package mk.ukim.finki.studentproductivityhelperapp.web;
 
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.studentproductivityhelperapp.model.User;
 import mk.ukim.finki.studentproductivityhelperapp.service.RegistrationService;
+import mk.ukim.finki.studentproductivityhelperapp.service.UserService;
 import mk.ukim.finki.studentproductivityhelperapp.service.impl.RegistrationRequest;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/registration")
+@CrossOrigin(origins = "http://localhost:7762")
+@RequestMapping(path = "/api/registration")
 @AllArgsConstructor
 public class RegistrationController {
 
     private RegistrationService registrationService;
+    private UserService userService;
 
-    @PostMapping
+    @PostMapping()
     public String register(@RequestBody RegistrationRequest request) {
         return registrationService.register(request);
+    }
+
+
+    @GetMapping
+    public List<User> listAll(){
+        return this.userService.findAll();
     }
 
 }

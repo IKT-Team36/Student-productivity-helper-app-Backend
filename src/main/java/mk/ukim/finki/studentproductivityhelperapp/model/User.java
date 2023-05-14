@@ -1,12 +1,13 @@
 package mk.ukim.finki.studentproductivityhelperapp.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-import javax.persistence.*;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
+@Table(name = "user", schema = "PUBLIC")
 public class User implements UserDetails {
 
     @Id
@@ -29,18 +31,14 @@ public class User implements UserDetails {
             generator = "student_sequence"
     )
     private Long id;
-
-    @Column(unique = true)
-    private String Email;
-    private String Password;
-    @Enumerated(EnumType.STRING)
-    private AppUserRole role;
-
     private String FirstName;
     private String LastName;
-
-    private Boolean locked;
-    private Boolean enabled;
+    private String email;
+    private String Password;
+    @Enumerated(EnumType.STRING)
+    private AppUserRole appUserRole;
+    private Boolean locked = false;
+    private Boolean enabled = false;
 
     @OneToMany
     private List<Course> courses;
@@ -65,13 +63,13 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
         return Collections.singleton(authority);
     }
 
     @Override
     public String getUsername() {
-        return Email;
+        return email;
     }
 
     @Override
@@ -94,13 +92,11 @@ public class User implements UserDetails {
         return enabled;
     }
 
-    public User(String email, String password, AppUserRole role, String firstName, String lastName, Boolean locked, Boolean enabled) {
-        Email = email;
-        Password = password;
-        this.role = role;
+    public User(String firstName, String lastName, String emaill, String password, AppUserRole appUserRole) {
         FirstName = firstName;
         LastName = lastName;
-        this.locked = locked;
-        this.enabled = enabled;
+        email = emaill;
+        Password = password;
+        this.appUserRole = appUserRole;
     }
 }

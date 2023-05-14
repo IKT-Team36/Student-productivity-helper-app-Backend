@@ -9,11 +9,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+//
+//@EnableJpaRepositories(basePackages = "mk.ukim.finki.studentproductivityhelperapp.model")
+//@EntityScan
+//@EnableAutoConfiguration
+//@ComponentScan(basePackages = {"mk.ukim.finki.studentproductivityhelperapp.repository","mk.ukim.finki.studentproductivityhelperapp.config"})
 
-@EnableJpaRepositories(basePackages = "mk.ukim.finki.studentproductivityhelperapp.model")
-@EntityScan
-@EnableAutoConfiguration
-@ComponentScan("mk.ukim.finki.studentproductivityhelperapp.repository")
+@SpringBootApplication
 public class StudentProductivityHelperAppApplication {
 
 	public static void main(String[] args) {

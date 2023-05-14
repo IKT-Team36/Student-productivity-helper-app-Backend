@@ -4,9 +4,9 @@ package mk.ukim.finki.studentproductivityhelperapp.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import java.time.ZonedDateTime;
 
 @Data
