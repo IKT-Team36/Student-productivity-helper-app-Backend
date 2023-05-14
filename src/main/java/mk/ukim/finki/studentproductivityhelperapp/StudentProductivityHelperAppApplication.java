@@ -10,9 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
-//@EnableNeo4jRepositories("com.digital.api.repositories")
-//@EnableJpaRepositories(basePackages = "mk.ukim.finki.studentproductivityhelperapp.model")
 @EnableJpaRepositories(basePackages = "mk.ukim.finki.studentproductivityhelperapp.model")
 @EntityScan
 @EnableAutoConfiguration
