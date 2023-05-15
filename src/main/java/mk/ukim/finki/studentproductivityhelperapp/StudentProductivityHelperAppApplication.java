@@ -10,10 +10,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 //
-//@EnableJpaRepositories(basePackages = "mk.ukim.finki.studentproductivityhelperapp.model")
+//@EnableJpaRepositories(basePackages = {"mk.ukim.finki.studentproductivityhelperapp.model"})
 //@EntityScan
 //@EnableAutoConfiguration
-//@ComponentScan(basePackages = {"mk.ukim.finki.studentproductivityhelperapp.repository","mk.ukim.finki.studentproductivityhelperapp.config"})
+//@ComponentScan(basePackages = {"mk.ukim.finki.studentproductivityhelperapp.repository","mk.ukim.finki.studentproductivityhelperapp.config"
+//,"package mk.ukim.finki.studentproductivityhelperapp.service.email"})
+//
 
 @SpringBootApplication
 public class StudentProductivityHelperAppApplication {

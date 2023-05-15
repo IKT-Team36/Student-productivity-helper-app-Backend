@@ -1,25 +1,22 @@
 package mk.ukim.finki.studentproductivityhelperapp.model;
 
 
+import jakarta.persistence.*;
 import lombok.Data;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 
 @Data
 @Entity
 public class Topic {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long TopicId;
+    @Column(length = 100)
     private String Topic;
+    @Column(length = 150)
     private String Content;
     @ManyToOne
     private User user;
-    @ManyToOne
-    private Course course;
-
     public Topic() {
 
     }

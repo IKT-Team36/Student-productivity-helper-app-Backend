@@ -1,5 +1,7 @@
 package mk.ukim.finki.studentproductivityhelperapp.service.impl;
 
+import lombok.*;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,6 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Setter
 public class RegistrationRequest {
     private final String firstName;
     private final String lastName;

@@ -2,29 +2,32 @@ package mk.ukim.finki.studentproductivityhelperapp.service.impl;
 
 
 import mk.ukim.finki.studentproductivityhelperapp.model.User;
-import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.EmailAlreadyExistsException;
-import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.InvalidUsernameOrPasswordException;
-import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.PasswordsDoNotMatchException;
-import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.UsernameAlreadyExistsException;
 import mk.ukim.finki.studentproductivityhelperapp.repository.UserRepository;
 import mk.ukim.finki.studentproductivityhelperapp.service.UserService;
+import mk.ukim.finki.studentproductivityhelperapp.service.token.ConfirmationToken;
+import mk.ukim.finki.studentproductivityhelperapp.service.token.ConfirmationTokenService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, ConfirmationTokenService confirmationTokenService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.confirmationTokenService = confirmationTokenService;
     }
 
 
@@ -78,6 +81,20 @@ public class UserServiceImpl implements UserService {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
-        return "works";
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                user
+
+        );
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+        return token;
+    }
+
+    @Override
+    public int enableUser(String email) {
+        return userRepository.enableUser(email);
     }
 }

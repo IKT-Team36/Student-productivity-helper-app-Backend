@@ -13,6 +13,10 @@ public interface UserService extends UserDetailsService {
 //                  String Email);
 
 //    User create(User user);
-List<User> findAll();
+
+
+
+    List<User> findAll();
     public String signUpUser(User user);
+    public int enableUser(String email) ;
 }

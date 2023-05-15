@@ -1,11 +1,9 @@
 package mk.ukim.finki.studentproductivityhelperapp.model;
 
 
+import jakarta.persistence.*;
 import lombok.Data;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import java.time.ZonedDateTime;
 
 @Data
@@ -13,7 +11,9 @@ import java.time.ZonedDateTime;
 public class Note {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long NoteId;
+    @Column(length = 500)
     private String NoteContent;
     private ZonedDateTime DateModified;
     @ManyToOne

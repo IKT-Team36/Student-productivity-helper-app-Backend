@@ -1,18 +1,17 @@
 package mk.ukim.finki.studentproductivityhelperapp.model;
 
 
+import jakarta.persistence.*;
 import lombok.Data;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 
 @Data
 @Entity
 public class ChatGPT {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long DataId;
+    @Column(length = 500)
     private String Data;
     @ManyToOne
     private Course course;

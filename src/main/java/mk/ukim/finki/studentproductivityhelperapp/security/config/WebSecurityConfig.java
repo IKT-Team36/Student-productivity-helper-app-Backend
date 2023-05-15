@@ -36,7 +36,8 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeHttpRequests((authz) -> authz.requestMatchers("/api/registration/*").permitAll()
+        http.authorizeHttpRequests((authz) -> authz.requestMatchers("/api/v*/registration/*","/api",
+                                "/login","/api/v1/registration").permitAll()
                         .anyRequest().authenticated())
                 .formLogin();
         return http.build();

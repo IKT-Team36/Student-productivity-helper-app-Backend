@@ -17,59 +17,77 @@ import java.util.List;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
-@Table(name = "user", schema = "PUBLIC")
+@Table(name = "`user`", schema = "dbo")
 public class User implements UserDetails {
 
-    @Id
     @SequenceGenerator(
             name = "student_sequence",
             sequenceName = "student_sequence",
             allocationSize = 1
     )
+    @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "student_sequence"
     )
     private Long id;
-    private String FirstName;
-    private String LastName;
+    @Column(length = 50)
+    private String firstName;
+    @Column(length = 50)
+    private String lastName;
+    @Column(unique = true,nullable = false, length = 60)
     private String email;
-    private String Password;
+    @Column(length = 30)
+    private String password;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
     private Boolean locked = false;
     private Boolean enabled = false;
 
-    @OneToMany
-    private List<Course> courses;
-    @OneToMany
-    private List<Topic> topics;
-    @OneToMany
-    private List<Event> events;
-    @OneToMany
-    private List<Log> logs;
-    @OneToMany
-    private List<Attachment> attachments;
-    @OneToMany
-    private List<Note> notes;
-    @OneToMany
-    private List<ToDo> toDos;
+//    @OneToMany
+//    private List<Course> courses;
+//    @OneToMany
+//    private List<Topic> topics;
+//    @OneToMany
+//    private List<Event> events;
+//    @OneToMany
+//    private List<Log> logs;
+//    @OneToMany
+//    private List<Attachment> attachments;
+//    @OneToMany
+//    private List<Note> notes;
+//    @OneToMany
+//    private List<ToDo> toDos;
 
-    private boolean isAccountNonExpired = true;
-    private boolean isAccountNonLocked = true;
-    private boolean isCredentialsNonExpired = true;
-    private boolean isEnabled = true;
+//    private boolean isAccountNonExpired = true;
+//    private boolean isAccountNonLocked = true;
+//    private boolean isCredentialsNonExpired = true;
+//    private boolean isEnabled = true;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
-        return Collections.singleton(authority);
+        SimpleGrantedAuthority authority =
+                new SimpleGrantedAuthority(appUserRole.name());
+        return Collections.singletonList(authority);
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     @Override
@@ -92,11 +110,11 @@ public class User implements UserDetails {
         return enabled;
     }
 
-    public User(String firstName, String lastName, String emaill, String password, AppUserRole appUserRole) {
-        FirstName = firstName;
-        LastName = lastName;
-        email = emaill;
-        Password = password;
+    public User(String firstName, String lastName, String email, String password, AppUserRole appUserRole) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
         this.appUserRole = appUserRole;
     }
 }

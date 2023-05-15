@@ -1,12 +1,9 @@
 package mk.ukim.finki.studentproductivityhelperapp.model;
 
 
+import jakarta.persistence.*;
 import lombok.Data;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import java.util.List;
 
 
@@ -15,39 +12,22 @@ import java.util.List;
 public class Course {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long CourseId;
+    @Column(length = 60)
     private String Name;
+    @Column(length = 30)
     private String Semester;
+    @Column(length = 200)
     private String Description;
+    @Column(length = 20)
     private String CourseStatus;
 
     @ManyToOne
     private User user;
-    @OneToMany
-    private List<Topic> topics;
-    @OneToMany
-    private List<Event> events;
-    @OneToMany
-    private List<Log> logs;
-    @OneToMany
-    private List<Attachment> attachments;
-    @OneToMany
-    private List<Note> notes;
-    @OneToMany
-    private List<ToDo> toDos;
-    @OneToMany
-    private List<ChatGPT> chatGPTSummaryList;
 
     public Course() {
 
     }
 
-    public Course(Long courseId, String name, String semester,
-                  String description, String courseStatus) {
-        CourseId = courseId;
-        Name = name;
-        Semester = semester;
-        Description = description;
-        CourseStatus = courseStatus;
-    }
 }
