@@ -10,17 +10,21 @@ public class ChatGPT {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long DataId;
+    private Long dataId;
     @Column(length = 500)
-    private String Data;
+    private String data;
     @ManyToOne
     private Course course;
     public ChatGPT() {
 
     }
 
-    public ChatGPT(Long dataId, String data) {
-        DataId = dataId;
-        Data = data;
+    public ChatGPT(String data) {
+        this.data = data;
+    }
+
+    public ChatGPT(String data, Course course) {
+        this.data = data;
+        this.course = course;
     }
 }

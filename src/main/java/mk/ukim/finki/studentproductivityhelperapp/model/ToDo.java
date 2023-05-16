@@ -12,26 +12,24 @@ public class ToDo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ToDoId;
+    private Long toDoId;
     @Column(length = 50)
-    private String ToDoName;
+    private String toDoName;
     @Column(length = 100)
-    private String ToDoDetails;
+    private String toDoDetails;
     @Column(length = 50)
-    private String ToDoStatus;
-    private ZonedDateTime DateCreated;
-    private ZonedDateTime EndDate;
+    private String toDoStatus;
+    private ZonedDateTime dateCreated;
+    private ZonedDateTime endDate;
     public ToDo() {
 
     }
 
-    public ToDo(Long toDoId, String toDoName, String toDoDetails, String toDoStatus,
-                ZonedDateTime dateCreated, ZonedDateTime endDate) {
-        ToDoId = toDoId;
-        ToDoName = toDoName;
-        ToDoDetails = toDoDetails;
-        ToDoStatus = toDoStatus;
-        DateCreated = dateCreated;
-        EndDate = endDate;
+    public ToDo(String toDoName, String toDoDetails, String toDoStatus, ZonedDateTime dateCreated, ZonedDateTime endDate) {
+        this.toDoName = toDoName;
+        this.toDoDetails = toDoDetails;
+        this.toDoStatus = toDoStatus;
+        this.dateCreated = dateCreated;
+        this.endDate = endDate;
     }
 }

@@ -12,10 +12,10 @@ public class Note {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long NoteId;
+    private Long noteId;
     @Column(length = 500)
-    private String NoteContent;
-    private ZonedDateTime DateModified;
+    private String noteContent;
+    private ZonedDateTime dateModified;
     @ManyToOne
     private User user;
     @ManyToOne
@@ -24,9 +24,15 @@ public class Note {
 
     }
 
-    public Note(Long noteId, String noteContent, ZonedDateTime dateModified) {
-        NoteId = noteId;
-        NoteContent = noteContent;
-        DateModified = dateModified;
+    public Note(String noteContent, ZonedDateTime dateModified) {
+        this.noteContent = noteContent;
+        this.dateModified = dateModified;
+    }
+
+    public Note(String noteContent, ZonedDateTime dateModified, User user, Course course) {
+        this.noteContent = noteContent;
+        this.dateModified = dateModified;
+        this.user = user;
+        this.course = course;
     }
 }

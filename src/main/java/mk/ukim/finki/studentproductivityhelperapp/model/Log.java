@@ -12,9 +12,9 @@ public class Log {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long LogId;
+    private Long logId;
     @Column(length = 300)
-    private String LogContent;
+    private String logContent;
     @ManyToOne
     private User user;
     @ManyToOne
@@ -23,8 +23,13 @@ public class Log {
 
     }
 
-    public Log(Long logId, Long logContent) {
-        LogId = logId;
-        LogContent = String.valueOf(logContent);
+    public Log(String logContent, User user, Course course) {
+        this.logContent = logContent;
+        this.user = user;
+        this.course = course;
+    }
+
+    public Log(String logContent) {
+        this.logContent = logContent;
     }
 }

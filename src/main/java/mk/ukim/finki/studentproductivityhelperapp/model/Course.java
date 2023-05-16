@@ -13,15 +13,15 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long CourseId;
+    private Long courseId;
     @Column(length = 60)
-    private String Name;
+    private String name;
     @Column(length = 30)
-    private String Semester;
+    private String semester;
     @Column(length = 200)
-    private String Description;
+    private String description;
     @Column(length = 20)
-    private String CourseStatus;
+    private String courseStatus;
 
     @ManyToOne
     private User user;

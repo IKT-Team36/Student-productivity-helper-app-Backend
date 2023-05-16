@@ -10,20 +10,25 @@ public class Topic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long TopicId;
+    private Long topicId;
     @Column(length = 100)
-    private String Topic;
+    private String topic;
     @Column(length = 150)
-    private String Content;
+    private String content;
     @ManyToOne
     private User user;
     public Topic() {
 
     }
 
-    public Topic(Long topicId, String topic, String content) {
-        TopicId = topicId;
-        Topic = topic;
-        Content = content;
+    public Topic(String topic, String content, User user) {
+        this.topic = topic;
+        this.content = content;
+        this.user = user;
+    }
+
+    public Topic(String topic, String content) {
+        this.topic = topic;
+        this.content = content;
     }
 }
