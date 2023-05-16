@@ -16,17 +16,10 @@ import java.util.List;
 public class RegistrationController {
 
     private RegistrationService registrationService;
-    private UserService userService;
-
     @PostMapping()
     public String register(@RequestBody RegistrationRequest request) {
         return registrationService.register(request);
     }
 
-
-    @GetMapping
-    public List<User> listAll(){
-        return this.userService.findAll();
-    }
 
 }

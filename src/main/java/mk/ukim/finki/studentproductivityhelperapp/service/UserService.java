@@ -9,13 +9,6 @@ import java.util.List;
 
 public interface UserService extends UserDetailsService {
 
-//    User register(String username, String password, String repeatPassword, String FirstName, String LastName,
-//                  String Email);
-
-//    User create(User user);
-
-
-
     List<User> findAll();
     public String signUpUser(User user);
     public int enableUser(String email) ;

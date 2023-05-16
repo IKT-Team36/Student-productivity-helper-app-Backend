@@ -37,31 +37,16 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeHttpRequests((authz) -> authz.requestMatchers("/api/v*/registration/*","/api",
-                                "/login","/api/v1/registration").permitAll()
+                                "/login","/api/v1/registration","/api/v*/login","/api/v1/test/*").permitAll()
                         .anyRequest().authenticated())
                 .formLogin();
         return http.build();
     }
 
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.authenticationProvider(daoAuthenticationProvider());
-//    }
-
     @Bean
     public AuthenticationManager authenticationManager2(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-//    @Bean
-//    public DaoAuthenticationProvider daoAuthenticationProvider()
-//    {
-//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//        provider.setPasswordEncoder(bCryptPasswordEncoder);
-//        provider.setUserDetailsService(userService);
-//        return provider;
-//    }
     @Bean
     public AuthenticationManager authenticationManager() {
 
