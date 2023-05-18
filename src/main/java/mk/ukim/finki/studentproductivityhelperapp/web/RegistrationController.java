@@ -19,7 +19,7 @@ public class RegistrationController {
     private RegistrationService registrationService;
 
 
-    @PostMapping("")
+    @PostMapping()
     public String register(@RequestBody RegistrationRequest request) {
         return registrationService.register(request);
     }

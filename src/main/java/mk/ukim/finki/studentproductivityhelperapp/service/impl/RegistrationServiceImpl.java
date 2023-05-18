@@ -25,10 +25,18 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     public String register(RegistrationRequest request) {
         boolean isValidEmail = emailValidator.test(request.getEmail());
+        boolean isEmailSent = emailSender.checkEmailSent(request.getEmail());
+
         if(!isValidEmail)
         {
             throw new IllegalArgumentException("email not valid");
+
         }
+        if (request.getFirstName()==null || request.getLastName().isEmpty() ||
+                request.getEmail()==null || request.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("Fill the empty label");
+        }
+
         String token = userService.signUpUser(
                 new User(
                         request.getFirstName(),
@@ -43,8 +51,13 @@ public class RegistrationServiceImpl implements RegistrationService {
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));
 
-        return token;
+        if (isEmailSent) {
+            return token;
+        } else {
+            throw new IllegalStateException("Failed to send verification email");
+        }
     }
+
     @Transactional
     public String confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService
