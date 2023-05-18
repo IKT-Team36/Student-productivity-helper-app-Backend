@@ -37,7 +37,7 @@ public class User implements UserDetails {
     private String lastName;
     @Column(unique = true,nullable = false, length = 60)
     private String email;
-    @Column(length = 30)
+    @Column(length = 255)
     private String password;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;

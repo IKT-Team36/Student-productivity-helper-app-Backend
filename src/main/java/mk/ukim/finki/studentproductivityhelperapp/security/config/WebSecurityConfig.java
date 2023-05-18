@@ -37,7 +37,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeHttpRequests((authz) -> authz.requestMatchers("/api/v*/registration/*","/api",
-                                "/login","/api/v1/registration","/api/v*/login","/api/v1/test/*").permitAll()
+                                "/login","/api/v1/registration","/api/v*/login","/api/v1/test/*","/api/v1/confirm",
+                                "/api/v1/registration/confirm?token=*").permitAll()
                         .anyRequest().authenticated())
                 .formLogin();
         return http.build();

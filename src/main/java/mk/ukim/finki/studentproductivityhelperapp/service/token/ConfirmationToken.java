@@ -15,23 +15,24 @@ import java.time.LocalDateTime;
 @Entity
 public class ConfirmationToken {
 
-    @Id
     @SequenceGenerator(
             name = "confirmation_token_sequence",
             sequenceName = "confirmation_token_sequence",
             allocationSize = 1
     )
+    @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "confirmation_token_sequence"
     )
-    private Long id;
+    private Long tokenId;
 
     @Column(nullable = false)
     private String token;
 
     @Column(nullable = false)
-    private LocalDateTime createdAD;
+    private LocalDateTime createdAt;
+
     @Column(nullable = false)
     private LocalDateTime expiresAt;
 
@@ -44,12 +45,14 @@ public class ConfirmationToken {
     )
     private User user;
 
-    public ConfirmationToken(String token, LocalDateTime createdAD,
-                             LocalDateTime expiredAt,User user) {
+    public ConfirmationToken(String token,
+                             LocalDateTime createdAt,
+                             LocalDateTime expiresAt,
+                             User user) {
         this.token = token;
-        this.createdAD = createdAD;
-        this.expiresAt = expiredAt;
-        this.user=user;
+        this.createdAt = createdAt;
+        this.expiresAt = expiresAt;
+        this.user = user;
     }
 
 }
