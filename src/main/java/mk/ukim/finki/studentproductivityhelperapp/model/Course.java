@@ -30,4 +30,6 @@ public class Course {
 
     }
 
+    public Course(String name, String semester, String description, String courseStatus, User user) {
+    }
 }
