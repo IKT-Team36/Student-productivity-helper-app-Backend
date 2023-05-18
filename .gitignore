@@ -29,6 +29,10 @@ hs_err_pid*
 *.ipr
 
 secrets.properties
+TestController.java
+D:\FINKI\4god\Ikt proekti\PROEKT\Student-productivity-helper-app-Backend\src\main\java\mk\ukim\finki\studentproductivityhelperapp\web\TestController.java
+src/main/java/mk/ukim/finki/studentproductivityhelperapp/web/TestController.java
+
 
 ### NetBeans ###
 /nbproject/private/

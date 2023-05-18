@@ -1,32 +1,34 @@
 package mk.ukim.finki.studentproductivityhelperapp.model;
 
 
+import jakarta.persistence.*;
 import lombok.Data;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Data
 @Entity
 public class Topic {
 
     @Id
-    private Long TopicId;
-    private String Topic;
-    private String Content;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long topicId;
+    @Column(length = 100)
+    private String topic;
+    @Column(length = 150)
+    private String content;
     @ManyToOne
     private User user;
-    @ManyToOne
-    private Course course;
-
     public Topic() {
 
     }
 
-    public Topic(Long topicId, String topic, String content) {
-        TopicId = topicId;
-        Topic = topic;
-        Content = content;
+    public Topic(String topic, String content, User user) {
+        this.topic = topic;
+        this.content = content;
+        this.user = user;
+    }
+
+    public Topic(String topic, String content) {
+        this.topic = topic;
+        this.content = content;
     }
 }

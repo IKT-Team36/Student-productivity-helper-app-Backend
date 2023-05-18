@@ -1,11 +1,10 @@
 package mk.ukim.finki.studentproductivityhelperapp.model;
 
 
+
+import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.time.ZonedDateTime;
 
 @Data
@@ -13,28 +12,37 @@ import java.time.ZonedDateTime;
 public class Attachment {
 
     @Id
-    private Long AttachmentId;
-    private String Name;
-    private ZonedDateTime Date;
-    private String Subject;
-    private String Type;
-    private String ByteContent;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long attachmentId;
+    @Column(length = 30)
+    private String name;
+    private ZonedDateTime date;
+    @Column(length = 50)
+    private String subject;
+    @Column(length = 50)
+    private String type;
+    @Column(length = 500)
+    private String byteContent;
     @ManyToOne
     private User user;
-    @ManyToOne
-    private Course course;
-
     public Attachment() {
 
     }
 
-    public Attachment(Long attachmentId, String name, ZonedDateTime date,
-                      String subject, String type, String byteContent) {
-        AttachmentId = attachmentId;
-        Name = name;
-        Date = date;
-        Subject = subject;
-        Type = type;
-        ByteContent = byteContent;
+    public Attachment(String name, ZonedDateTime date, String subject, String type, String byteContent) {
+        this.name = name;
+        this.date = date;
+        this.subject = subject;
+        this.type = type;
+        this.byteContent = byteContent;
+    }
+
+    public Attachment(String name, ZonedDateTime date, String subject, String type, String byteContent, User user) {
+        this.name = name;
+        this.date = date;
+        this.subject = subject;
+        this.type = type;
+        this.byteContent = byteContent;
+        this.user = user;
     }
 }

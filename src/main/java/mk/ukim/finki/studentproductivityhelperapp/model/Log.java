@@ -1,19 +1,20 @@
 package mk.ukim.finki.studentproductivityhelperapp.model;
 
 
+import jakarta.persistence.*;
 import lombok.Data;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Data
 @Entity
+@Table(name = "`log`", schema = "dbo")
 public class Log {
 
+
     @Id
-    private Long LogId;
-    private Long LogContent;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long logId;
+    @Column(length = 300)
+    private String logContent;
     @ManyToOne
     private User user;
     @ManyToOne
@@ -22,8 +23,13 @@ public class Log {
 
     }
 
-    public Log(Long logId, Long logContent) {
-        LogId = logId;
-        LogContent = logContent;
+    public Log(String logContent, User user, Course course) {
+        this.logContent = logContent;
+        this.user = user;
+        this.course = course;
+    }
+
+    public Log(String logContent) {
+        this.logContent = logContent;
     }
 }

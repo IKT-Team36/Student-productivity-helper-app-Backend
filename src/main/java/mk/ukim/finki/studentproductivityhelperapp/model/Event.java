@@ -1,22 +1,24 @@
 package mk.ukim.finki.studentproductivityhelperapp.model;
 
 
+import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.time.ZonedDateTime;
 
 @Data
 @Entity
+@Table(name = "`event`", schema = "dbo")
 public class Event {
 
     @Id
-    private Long EventId;
-    private String EventName;
-    private String EventLocation;
-    private ZonedDateTime EventDate;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long eventId;
+    @Column(length = 50)
+    private String eventName;
+    @Column(length = 100)
+    private String eventLocation;
+    private ZonedDateTime eventDate;
     @ManyToOne
     private User user;
     @ManyToOne
@@ -25,10 +27,17 @@ public class Event {
 
     }
 
-    public Event(Long eventId, String eventName, String eventLocation, ZonedDateTime eventDate) {
-        EventId = eventId;
-        EventName = eventName;
-        EventLocation = eventLocation;
-        EventDate = eventDate;
+    public Event(String eventName, String eventLocation, ZonedDateTime eventDate) {
+        this.eventName = eventName;
+        this.eventLocation = eventLocation;
+        this.eventDate = eventDate;
+    }
+
+    public Event(String eventName, String eventLocation, ZonedDateTime eventDate, User user, Course course) {
+        this.eventName = eventName;
+        this.eventLocation = eventLocation;
+        this.eventDate = eventDate;
+        this.user = user;
+        this.course = course;
     }
 }
