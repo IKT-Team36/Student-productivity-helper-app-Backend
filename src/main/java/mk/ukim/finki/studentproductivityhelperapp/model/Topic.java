@@ -3,32 +3,38 @@ package mk.ukim.finki.studentproductivityhelperapp.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 @Data
 @Entity
+@Table(name = "Topic", schema = "dbo")
 public class Topic {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long topicId;
-    @Column(length = 100)
-    private String topic;
-    @Column(length = 150)
-    private String content;
+    @Column(name = "topicId")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private Long TopicId;
+    @Column(name = "topic")
+    private String Topic;
+    @Column(name = "content")
+    private String Content;
+
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "course_course_id")
+    private Course course;
+
     public Topic() {
 
     }
 
-    public Topic(String topic, String content, User user) {
-        this.topic = topic;
-        this.content = content;
-        this.user = user;
-    }
-
-    public Topic(String topic, String content) {
-        this.topic = topic;
-        this.content = content;
+    public Topic(Long topicId, String topic, String content) {
+        TopicId = topicId;
+        Topic = topic;
+        Content = content;
     }
 }
