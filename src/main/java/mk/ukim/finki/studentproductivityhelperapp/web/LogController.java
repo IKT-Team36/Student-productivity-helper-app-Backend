@@ -1,51 +1,51 @@
 package mk.ukim.finki.studentproductivityhelperapp.web;
 
 import lombok.AllArgsConstructor;
-import mk.ukim.finki.studentproductivityhelperapp.model.Course;
 import mk.ukim.finki.studentproductivityhelperapp.model.Event;
-import mk.ukim.finki.studentproductivityhelperapp.model.dto.CourseDto;
+import mk.ukim.finki.studentproductivityhelperapp.model.Log;
 import mk.ukim.finki.studentproductivityhelperapp.model.dto.EventDto;
-import mk.ukim.finki.studentproductivityhelperapp.service.CourseService;
+import mk.ukim.finki.studentproductivityhelperapp.model.dto.LogDto;
 import mk.ukim.finki.studentproductivityhelperapp.service.EventService;
+import mk.ukim.finki.studentproductivityhelperapp.service.LogService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:7762")
-@RequestMapping(path = "/api/v1/event",
+@RequestMapping(path = "/api/v1/log",
         method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 @AllArgsConstructor
-public class EventController {
+public class LogController {
 
-    private EventService eventService;
+    private LogService logService;
 
     @PostMapping("/add")
-    public ResponseEntity<Event> save(@RequestBody EventDto eventDto) {
+    public ResponseEntity<Log> save(@RequestBody LogDto logDto) {
 
-        return this.eventService.save(eventDto)
-                .map(course -> ResponseEntity.ok().body(course))
+        return this.logService.save(logDto)
+                .map(log -> ResponseEntity.ok().body(log))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
 
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Event> edit(@PathVariable Long id, @RequestBody EventDto eventDto) {
-        return this.eventService.edit(id, eventDto)
-                .map(event -> ResponseEntity.ok().body(event))
+    public ResponseEntity<Log> edit(@PathVariable Long id, @RequestBody LogDto logDto) {
+        return this.logService.edit(id, logDto)
+                .map(log -> ResponseEntity.ok().body(log))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
-        this.eventService.delete(id);
+        this.logService.delete(id);
     }
 
     @GetMapping(path = "/all")
-    public List<Event> listAll() {
-        return this.eventService.findAll();
+    public List<Log> listAll() {
+
+        return this.logService.findAll();
     }
 
 }

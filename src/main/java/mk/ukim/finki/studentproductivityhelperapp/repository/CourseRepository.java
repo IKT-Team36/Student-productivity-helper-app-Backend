@@ -10,12 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Long> {
-
-
-    @Query(value = "update Course c set c.isDeleted = 1" +
-            "where c.courseId = :courseId", nativeQuery = true)
-    int deleteCourse(Long courseId);
-
     @Query(value = "select Course c where c.name = :courseName", nativeQuery = true)
     Optional<Course> findCourseByName(String courseName);
 }

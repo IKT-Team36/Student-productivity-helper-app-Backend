@@ -59,13 +59,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Optional<Course> delete(Long id) {
+    public void delete(Long id) {
         Course course = this.courseRepository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException(id));
-        this.courseRepository.deleteCourse(id);
-//        this.courseRepository.save(course);
+        course.setIsDeleted(1);
+//        this.courseRepository.deleteCourse(id);
+        this.courseRepository.save(course);
 //        return Optional.of(course);
-        return Optional.of(course);
+        System.out.println("Is deleted set to 1");
     }
 
 }

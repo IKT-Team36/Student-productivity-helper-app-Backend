@@ -12,5 +12,5 @@ public interface EventService {
     Optional<Event> findById(Long id);
     Optional<Event> save(EventDto eventDto);
     Optional<Event> edit(Long id, EventDto eventDto);
-    Optional<Event> delete(Long id);
+    void delete(Long id);
 }

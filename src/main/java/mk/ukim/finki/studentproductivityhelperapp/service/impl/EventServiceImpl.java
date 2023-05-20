@@ -5,6 +5,7 @@ import mk.ukim.finki.studentproductivityhelperapp.model.Event;
 import mk.ukim.finki.studentproductivityhelperapp.model.User;
 import mk.ukim.finki.studentproductivityhelperapp.model.dto.EventDto;
 import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.CourseNotFoundException;
+import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.EventNotFoundException;
 import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.UserIdDoesNotExistException;
 import mk.ukim.finki.studentproductivityhelperapp.repository.CourseRepository;
 import mk.ukim.finki.studentproductivityhelperapp.repository.EventRepository;
@@ -53,11 +54,18 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Optional<Event> edit(Long id, EventDto eventDto) {
-        return Optional.empty();
+        Event event = this.eventRepository.findById(id)
+                .orElseThrow(() -> new EventNotFoundException(id));
+        event.setEventDate(eventDto.getEventDate());
+        event.setEventLocation(eventDto.getEventLocation());
+        this.eventRepository.save(event);
+        return Optional.of(event);
     }
 
     @Override
-    public Optional<Event> delete(Long id) {
-        return Optional.empty();
+    public void delete(Long id) {
+        Event event = this.eventRepository.findById(id)
+                .orElseThrow(() -> new EventNotFoundException(id));
+        this.eventRepository.delete(event);
     }
 }

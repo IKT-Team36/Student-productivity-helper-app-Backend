@@ -38,7 +38,8 @@ public class WebSecurityConfig {
         http.csrf().disable();
         http.authorizeHttpRequests((authz) -> authz.requestMatchers("/api/v*/registration/*","/api",
                                 "/login","/api/v1/registration","/api/v*/login","/api/v1/test/*","/api/v1/confirm",
-                                "/api/v1/registration/confirm?token=*").permitAll()
+                                "/api/v1/registration/confirm?token=*",
+                                "/api/v1/*/*/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin();
         return http.build();

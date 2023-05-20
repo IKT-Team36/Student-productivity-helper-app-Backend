@@ -12,7 +12,7 @@ public interface CourseService {
     Optional<Course> findById(Long id);
     Optional<Course> save(CourseDto courseDto);
     Optional<Course> edit(Long id, CourseDto courseDto);
-    Optional<Course> delete(Long id);
+    void delete(Long id);
 
 
 }

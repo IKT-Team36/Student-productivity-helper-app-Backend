@@ -13,7 +13,8 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:7762")
-@RequestMapping(path = "/api/v1/registration")
+@RequestMapping(path = "/api/v1/course",
+        method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 @AllArgsConstructor
 public class CourseController {
 
@@ -36,13 +37,11 @@ public class CourseController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Course> delete(@PathVariable Long id) {
-        return this.courseService.delete(id)
-                .map(course -> ResponseEntity.ok().body(course))
-                .orElseGet(() -> ResponseEntity.badRequest().build());
+    public void delete(@PathVariable Long id) {
+        this.courseService.delete(id);
     }
 
-    @GetMapping(path = "/all")
+    @GetMapping("/all")
     public List<Course> listAll(Authentication authentication) { //
 
 //        User user = (User) authentication.getPrincipal();
