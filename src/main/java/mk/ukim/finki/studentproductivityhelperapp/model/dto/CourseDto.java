@@ -22,23 +22,4 @@ public class CourseDto {
         this.user = user;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getSemester() {
-        return semester;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getCourseStatus() {
-        return courseStatus;
-    }
-
-    public Long getUser() {
-        return user;
-    }
 }

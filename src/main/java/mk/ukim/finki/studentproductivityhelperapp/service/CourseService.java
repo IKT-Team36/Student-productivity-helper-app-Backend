@@ -11,5 +11,8 @@ public interface CourseService {
     List<Course> findAll();
     Optional<Course> findById(Long id);
     Optional<Course> save(CourseDto courseDto);
-    Optional<Course> save(String Name, String Semester, String Description, String CourseStatus, String User);
+    Optional<Course> edit(Long id, CourseDto courseDto);
+    Optional<Course> delete(Long id);
+
+
 }

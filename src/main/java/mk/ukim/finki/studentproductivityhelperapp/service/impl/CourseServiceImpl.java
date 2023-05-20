@@ -3,7 +3,8 @@ package mk.ukim.finki.studentproductivityhelperapp.service.impl;
 import mk.ukim.finki.studentproductivityhelperapp.model.Course;
 import mk.ukim.finki.studentproductivityhelperapp.model.User;
 import mk.ukim.finki.studentproductivityhelperapp.model.dto.CourseDto;
-import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.UserEmailDoesNotExistException;
+import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.CourseNotFoundException;
+import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.UserIdDoesNotExistException;
 import mk.ukim.finki.studentproductivityhelperapp.repository.CourseRepository;
 import mk.ukim.finki.studentproductivityhelperapp.repository.UserRepository;
 import mk.ukim.finki.studentproductivityhelperapp.service.CourseService;
@@ -36,22 +37,35 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Optional<Course> save(CourseDto courseDto) {
         User user = this.userRepository.findById(courseDto.getUser())
-                .orElseThrow(() -> new UserEmailDoesNotExistException(courseDto.getUser()));
-        System.out.println(user.getEmail());
+                .orElseThrow(() -> new UserIdDoesNotExistException(courseDto.getUser()));
         Course course = new Course(courseDto.getName(), courseDto.getSemester(),
                 courseDto.getDescription(), courseDto.getCourseStatus(), user);
-        System.out.println(course);
         this.courseRepository.save(course);
         return Optional.of(course);
     }
 
     @Override
-    public Optional<Course> save(String Name, String Semester, String Description, String CourseStatus, String User) {
-//        User user = this.userRepository.findByEmail(User)
-//                .orElseThrow(() -> new UserEmailDoesNotExistException(User));
-        User user = new User();
-        Course course = new Course(Name, Semester, Description, CourseStatus, user);
+    public Optional<Course> edit(Long id, CourseDto courseDto) {
+        Course course = this.courseRepository.findById(id)
+                .orElseThrow(() -> new CourseNotFoundException(id));
+
+        course.setDescription(courseDto.getDescription());
+        course.setCourseStatus(courseDto.getCourseStatus());
+        course.setName(courseDto.getName());
+        course.setSemester(courseDto.getSemester());
+
         this.courseRepository.save(course);
         return Optional.of(course);
     }
+
+    @Override
+    public Optional<Course> delete(Long id) {
+        Course course = this.courseRepository.findById(id)
+                .orElseThrow(() -> new CourseNotFoundException(id));
+        this.courseRepository.deleteCourse(id);
+//        this.courseRepository.save(course);
+//        return Optional.of(course);
+        return Optional.of(course);
+    }
+
 }
