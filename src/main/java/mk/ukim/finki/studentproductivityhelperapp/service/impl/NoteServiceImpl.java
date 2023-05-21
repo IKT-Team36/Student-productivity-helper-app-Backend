@@ -1,5 +1,7 @@
 package mk.ukim.finki.studentproductivityhelperapp.service.impl;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import mk.ukim.finki.studentproductivityhelperapp.model.Course;
 import mk.ukim.finki.studentproductivityhelperapp.model.Note;
 import mk.ukim.finki.studentproductivityhelperapp.model.User;
@@ -11,6 +13,9 @@ import mk.ukim.finki.studentproductivityhelperapp.repository.CourseRepository;
 import mk.ukim.finki.studentproductivityhelperapp.repository.NoteRepository;
 import mk.ukim.finki.studentproductivityhelperapp.repository.UserRepository;
 import mk.ukim.finki.studentproductivityhelperapp.service.NoteService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -32,6 +37,20 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<Note> findAll() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+            System.out.println(String.format("Logged in user is: %s", username));
+            // Do something with the username
+        } else {
+            // User not authenticated or authentication details not found
+            System.out.println("User not authenticated");
+            System.out.println(authentication);
+        }
+
         return this.noteRepository.findAll();
     }
 
