@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface AttachmentRepository extends JpaRepository<Attachment,Long> {
     List<Attachment> findBySubject(String subject);
+
+    void deleteByName(String name);
 }

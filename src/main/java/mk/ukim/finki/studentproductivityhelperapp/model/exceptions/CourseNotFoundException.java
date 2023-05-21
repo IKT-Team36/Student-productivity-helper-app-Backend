@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class AttachmentNotFoundException extends RuntimeException{
-    public AttachmentNotFoundException(Long attachmentId) {
-        super(String.format("Attachment with attachmentId: %s already exists", attachmentId));
+public class CourseNotFoundException extends RuntimeException{
+    public CourseNotFoundException(Long courseId) {
+        super(String.format("Course with course_id: %s already exists", courseId));
     }
 }

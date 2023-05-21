@@ -22,7 +22,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.List;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @EnableWebSecurity
@@ -38,7 +37,14 @@ public class WebSecurityConfig {
         http.csrf().disable();
         http.authorizeHttpRequests((authz) -> authz.requestMatchers("/api/v*/registration/*","/api",
                                 "/login","/api/v1/registration","/api/v*/login","/api/v1/test/*","/api/v1/confirm",
-                                "/api/v1/registration/confirm?token=*").permitAll()
+                                "/api/v1/registration/confirm?token=*","api/v1/test/add","" +
+                                        "/api/v1/attachment/*","/api/v1/attachment/add",
+                                "/api/v1/attachment/delete","/api/v1/attachment/delete/{id}","" +
+                                        "/api/v1/attachment/delete/*","/api/v1/attachment/edit/{id}",
+                                "/api/v1/attachment/edit/*","/api/v1/attachment/edit/*","/api/v1/toDo",
+                                "/api/v1/toDo/*",
+                                "/api/v1/toDo/add","/api/v1/toDo/edit/*","/api/v1/toDo/delete/*","/api/v1/topic","/api/v1/topic/*","/api/v1/topic/edit","/api/v1/topic/edit/{id}",
+                                "/api/v1/topic/edit/*","/api/v1/topic/delete","\"/api/v1/topic/delete/{id}","/api/v1/topic/delete/*").permitAll()
                         .anyRequest().authenticated())
                 .formLogin();
         return http.build();

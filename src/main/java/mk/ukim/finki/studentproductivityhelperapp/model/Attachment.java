@@ -25,6 +25,7 @@ public class Attachment {
     private String byteContent;
     @ManyToOne
     private User user;
+
     public Attachment() {
 
     }

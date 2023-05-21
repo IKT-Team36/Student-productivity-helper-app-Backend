@@ -10,12 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+import java.util.Optional;
 
 @Getter
-@Setter
 @EqualsAndHashCode
-@NoArgsConstructor
+@Setter
 @Entity
 @Table(name = "`user`", schema = "dbo")
 public class User implements UserDetails {
@@ -44,26 +43,6 @@ public class User implements UserDetails {
     private Boolean locked = false;
     private Boolean enabled = false;
 
-//    @OneToMany
-//    private List<Course> courses;
-//    @OneToMany
-//    private List<Topic> topics;
-//    @OneToMany
-//    private List<Event> events;
-//    @OneToMany
-//    private List<Log> logs;
-//    @OneToMany
-//    private List<Attachment> attachments;
-//    @OneToMany
-//    private List<Note> notes;
-//    @OneToMany
-//    private List<ToDo> toDos;
-
-//    private boolean isAccountNonExpired = true;
-//    private boolean isAccountNonLocked = true;
-//    private boolean isCredentialsNonExpired = true;
-//    private boolean isEnabled = true;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -82,13 +61,6 @@ public class User implements UserDetails {
         return email;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -110,11 +82,16 @@ public class User implements UserDetails {
         return enabled;
     }
 
+
     public User(String firstName, String lastName, String email, String password, AppUserRole appUserRole) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.appUserRole = appUserRole;
+    }
+
+    public User() {
+        // default constructor
     }
 }
