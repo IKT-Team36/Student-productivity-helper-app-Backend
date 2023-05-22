@@ -9,9 +9,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-//import javax.mail.MessagingException;
-//import javax.mail.internet.MimeMessage;
-
 @Service
 public class EmailService implements EmailSender {
 
@@ -39,6 +36,20 @@ public class EmailService implements EmailSender {
         } catch (MessagingException e) {
             LOGGER.error("failed to send email", e);
             throw new IllegalStateException("failed to send email");
+        }
+    }
+    @Override
+    public boolean checkEmailSent(String email) {
+        try {
+            // Send a test email to the provided email address
+            send(email, "This is a test email.");
+
+            // If the send operation completes without throwing an exception, assume the email was sent successfully
+            return true;
+        } catch (Exception e) {
+            // Handle any exceptions that occur during the sending process
+            LOGGER.error("Failed to send test email", e);
+            return false;
         }
     }
 }

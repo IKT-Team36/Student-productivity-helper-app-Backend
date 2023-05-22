@@ -6,10 +6,15 @@ import mk.ukim.finki.studentproductivityhelperapp.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
 
     List<User> findAll();
-    public String signUpUser(User user);
-    public int enableUser(String email) ;
+
+     String signUpUser(User user);
+
+     int enableUser(String email);
+
+    Optional<User> findById(Long id);
 }

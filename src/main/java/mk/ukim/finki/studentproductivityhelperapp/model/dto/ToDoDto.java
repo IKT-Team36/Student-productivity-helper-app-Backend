@@ -1,35 +1,28 @@
-package mk.ukim.finki.studentproductivityhelperapp.model;
-
+package mk.ukim.finki.studentproductivityhelperapp.model.dto;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import mk.ukim.finki.studentproductivityhelperapp.model.Course;
+import mk.ukim.finki.studentproductivityhelperapp.model.User;
 
 import java.time.ZonedDateTime;
 
 @Data
-@Entity
-public class ToDo {
+public class ToDoDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long toDoId;
-    @Column(length = 50)
     private String toDoName;
-    @Column(length = 100)
     private String toDoDetails;
-    @Column(length = 50)
     private String toDoStatus;
     private ZonedDateTime dateCreated;
     private ZonedDateTime endDate;
-    @ManyToOne
-    private User user;
-    @ManyToOne
-    private Course course;
-    public ToDo() {
+    private Long user;
+    private Long course;
+    public ToDoDto() {
 
     }
 
-    public ToDo(String toDoName, String toDoDetails, String toDoStatus, ZonedDateTime dateCreated, ZonedDateTime endDate, User user, Course course) {
+    public ToDoDto(String toDoName, String toDoDetails, String toDoStatus, ZonedDateTime dateCreated, ZonedDateTime endDate, Long user, Long course) {
         this.toDoName = toDoName;
         this.toDoDetails = toDoDetails;
         this.toDoStatus = toDoStatus;

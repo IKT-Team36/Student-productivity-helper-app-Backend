@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -63,5 +64,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int enableUser(String email) {
         return userRepository.enableUser(email);
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return this.userRepository.findById(id);
     }
 }

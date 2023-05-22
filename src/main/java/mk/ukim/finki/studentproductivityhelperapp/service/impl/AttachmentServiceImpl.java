@@ -2,6 +2,7 @@ package mk.ukim.finki.studentproductivityhelperapp.service.impl;
 
 import mk.ukim.finki.studentproductivityhelperapp.model.Attachment;
 import mk.ukim.finki.studentproductivityhelperapp.model.User;
+import mk.ukim.finki.studentproductivityhelperapp.model.dto.AttachmentDto;
 import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.AttachmentNotFoundException;
 import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.UserNotFoundException;
 import mk.ukim.finki.studentproductivityhelperapp.repository.AttachmentRepository;
@@ -26,17 +27,16 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 
     @Override
-    public Optional<Attachment> create(String name, ZonedDateTime date, String subject, String type, String byteContent, User user_id) {
-        User user = this.userRepository.findById(user_id).orElseThrow(()->new UserNotFoundException(user_id));
+    public Optional<Attachment> create(String name, ZonedDateTime date, String subject, String type, String byteContent, Long user) {
 
-        Attachment attachment = new Attachment(name,date,subject,type,byteContent,user);
-        this.attachmentRepository.save(attachment);
-        return Optional.of(attachment);
+        User userNEW = this.userRepository.findById(user).orElseThrow(()->new UserNotFoundException(user));
+        this.attachmentRepository.deleteByName(name);
+        return Optional.of(this.attachmentRepository.save(new Attachment(name, date, subject, type, byteContent, userNEW)));
 
     }
 
     @Override
-    public Optional<Attachment> update(Long attachmentId,String name, ZonedDateTime date, String subject, String type, String byteContent,User user_id) {
+    public Optional<Attachment> edit(Long attachmentId,String name, ZonedDateTime date, String subject, String type, String byteContent,Long user) {
         Attachment attachment = this.attachmentRepository.findById(attachmentId).orElseThrow(()->new AttachmentNotFoundException(attachmentId));
         attachment.setName(name);
         attachment.setDate(date);
@@ -44,16 +44,42 @@ public class AttachmentServiceImpl implements AttachmentService {
         attachment.setType(type);
         attachment.setByteContent(byteContent);
 
-        User user = this.userRepository.findById(user_id).orElseThrow(()->new UserNotFoundException(user_id));
-        attachment.setUser(user);
+        User userNEW = this.userRepository.findById(user).orElseThrow(()->new UserNotFoundException(user));
+        attachment.setUser(userNEW);
 
-        this.attachmentRepository.save(attachment);
-        return Optional.of(attachment);
+
+        return Optional.of(this.attachmentRepository.save(attachment));
 
     }
 
     @Override
-    public void delete(Long attachmentId) {
+    public Optional<Attachment> save(AttachmentDto attachmentDto) {
+        User user = this.userRepository.findById(attachmentDto.getUser()).orElseThrow(()->new UserNotFoundException(attachmentDto.getUser()));
+        this.attachmentRepository.deleteByName(attachmentDto.getName());
+        return Optional.of(this.attachmentRepository.
+                save(new Attachment(attachmentDto.getName(), attachmentDto.getDate(),
+                        attachmentDto.getSubject(), attachmentDto.getType(),attachmentDto.getByteContent(), user)));
+    }
+
+    @Override
+    public Optional<Attachment> edit(Long attachmentId, AttachmentDto attachmentDto) {
+        Attachment attachment = this.attachmentRepository.findById(attachmentId).orElseThrow(()->new AttachmentNotFoundException(attachmentId));
+
+        attachment.setName(attachmentDto.getName());
+        attachment.setDate(attachmentDto.getDate());
+        attachment.setSubject(attachmentDto.getSubject());
+        attachment.setType(attachmentDto.getType());
+        attachment.setByteContent(attachmentDto.getByteContent());
+
+        User user = this.userRepository.findById(attachmentDto.getUser()).orElseThrow(()->new UserNotFoundException(attachmentDto.getUser()));
+        attachment.setUser(user);
+
+        return Optional.of(this.attachmentRepository.save(attachment));
+
+    }
+
+    @Override
+    public void deleteById(Long attachmentId) {
             this.attachmentRepository.deleteById(attachmentId);
     }
 
@@ -66,4 +92,15 @@ public class AttachmentServiceImpl implements AttachmentService {
     public List<Attachment> searchAttachments(String subject) {
         return this.attachmentRepository.findBySubject(subject);
     }
+
+    @Override
+    public Optional<Attachment> findById(Long attachmentId) {
+        return this.attachmentRepository.findById(attachmentId);
+    }
+//
+//    @Override
+//    public Attachment saveAtt(Attachment attachment) {
+//        return this.attachmentRepository.save(attachment);
+//    }
+
 }
