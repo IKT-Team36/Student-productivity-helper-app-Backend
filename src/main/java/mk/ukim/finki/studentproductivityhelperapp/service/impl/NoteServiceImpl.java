@@ -55,8 +55,8 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Optional<Note> findById(Long id) {
-        return Optional.of(this.noteRepository.getReferenceById(id));
+    public Optional<Note> findById(Long noteId) {
+        return this.noteRepository.findById(noteId);
     }
 
     @Override

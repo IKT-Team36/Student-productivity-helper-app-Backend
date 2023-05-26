@@ -1,11 +1,9 @@
 package mk.ukim.finki.studentproductivityhelperapp.service.impl;
 
-import mk.ukim.finki.studentproductivityhelperapp.model.Attachment;
 import mk.ukim.finki.studentproductivityhelperapp.model.Course;
 import mk.ukim.finki.studentproductivityhelperapp.model.ToDo;
 import mk.ukim.finki.studentproductivityhelperapp.model.User;
 import mk.ukim.finki.studentproductivityhelperapp.model.dto.ToDoDto;
-import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.AttachmentNotFoundException;
 import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.CourseNotFoundException;
 import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.ToDoNotFoundException;
 import mk.ukim.finki.studentproductivityhelperapp.model.exceptions.UserNotFoundException;
@@ -17,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static ch.qos.logback.core.joran.spi.ConsoleTarget.SystemOut;
 
 @Service
 public class ToDoServiceImpl implements ToDoService {
@@ -33,11 +33,19 @@ public class ToDoServiceImpl implements ToDoService {
 
     @Override
     public Optional<ToDo> save(ToDoDto toDoDto) {
-        User user = this.userRepository.findById(toDoDto.getUser()).orElseThrow(()->new UserNotFoundException(toDoDto.getUser()));
+//        User currentUser = currentUserProvider.getCurrentUser();
+//        String currentEmail = currentUserProvider.getCurrentUserEmail();
+//        System.out.println(currentEmail);
+//
+//        User user = this.userRepository.findByEmail(currentEmail).orElseThrow(()-> new RuntimeException("user not found"));
+       User user = this.userRepository.findById(toDoDto.getUser()).orElseThrow(()->new UserNotFoundException(toDoDto.getUser()));
+
         Course course = this.courseRepository.findById(toDoDto.getCourse()).orElseThrow(()->new CourseNotFoundException(toDoDto.getCourse()));
+
         this.toDoRepository.deleteBytoDoName(toDoDto.getToDoName());
         return Optional.of(this.toDoRepository.
-                save(new ToDo(toDoDto.getToDoName(),toDoDto.getToDoDetails(),toDoDto.getToDoStatus(),toDoDto.getDateCreated(),toDoDto.getEndDate(),user,course)));
+                save(new ToDo(toDoDto.getToDoName(),toDoDto.getToDoDetails(),
+                        toDoDto.getToDoStatus(),toDoDto.getDateCreated(),toDoDto.getEndDate(),user,course)));
     }
 
     @Override
@@ -49,11 +57,11 @@ public class ToDoServiceImpl implements ToDoService {
         toDo.setToDoStatus(toDoDto.getToDoStatus());
         toDo.setDateCreated(toDoDto.getDateCreated());
         toDo.setEndDate(toDoDto.getEndDate());
-
-        User user = this.userRepository.findById(toDoDto.getUser()).orElseThrow(()->new UserNotFoundException(toDoDto.getUser()));
+//        String currentUser = currentUserProvider.getCurrentUser();
+        //User user = this.userRepository.findById(toDoDto.getUser()).orElseThrow(()->new UserNotFoundException(toDoDto.getUser()));
         Course course = this.courseRepository.findById(toDoDto.getCourse()).orElseThrow(()->new CourseNotFoundException(toDoDto.getCourse()));
 
-        toDo.setUser(user);
+//        toDo.setUser(currentUser);
         toDo.setCourse(course);
 
         return Optional.of(this.toDoRepository.save(toDo));

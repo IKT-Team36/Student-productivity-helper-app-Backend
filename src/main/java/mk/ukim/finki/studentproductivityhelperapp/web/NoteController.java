@@ -4,6 +4,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import mk.ukim.finki.studentproductivityhelperapp.model.Attachment;
 import mk.ukim.finki.studentproductivityhelperapp.model.Note;
 import mk.ukim.finki.studentproductivityhelperapp.model.User;
 import mk.ukim.finki.studentproductivityhelperapp.model.dto.NoteDto;
@@ -29,22 +30,34 @@ public class NoteController {
     private JwtTokenUtil jwtTokenUtil;
     private UserService userService;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Note> findById(@PathVariable Long id) {
+        return this.noteService.findById(id)
+                .map(note -> ResponseEntity.ok().body(note))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/allNotes")
+    public List<Note> listNotes(){
+        return this.noteService.findAll();
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Note> save(@RequestBody NoteDto noteDto, HttpServletRequest request) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentEmail = (String) authentication.getPrincipal();
-
-        System.out.println("Current email");
-        System.out.println(currentEmail);
-        System.out.println("Save note controller");
-        HttpSession session = request.getSession();
-        String token = (String) session.getAttribute("token");
-
-        String email = this.jwtTokenUtil.extractUsername(token);
-        User user = (User) this.userService.loadUserByUsername(email);
-        System.out.println("Print email from loaded user");
-        System.out.println(user.getEmail());
+//
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentEmail = (String) authentication.getPrincipal();
+//
+//        System.out.println("Current email");
+//        System.out.println(currentEmail);
+//        System.out.println("Save note controller");
+//        HttpSession session = request.getSession();
+//        String token = (String) session.getAttribute("token");
+//
+//        String email = this.jwtTokenUtil.extractUsername(token);
+//        User user = (User) this.userService.loadUserByUsername(email);
+//        System.out.println("Print email from loaded user");
+//        System.out.println(user.getEmail());
 
         return this.noteService.save(noteDto)
                 .map(note -> ResponseEntity.ok().body(note))
@@ -64,21 +77,22 @@ public class NoteController {
         this.noteService.delete(id);
     }
 
-    @GetMapping("/all")
-    public List<Note> listAll(HttpServletRequest request) {
+//    @GetMapping("/all")
+//    public List<Note> listAll(HttpServletRequest request) {
+//
+//        HttpSession session = request.getSession();
+//        String token = (String) session.getAttribute("token");
+//        String email = this.jwtTokenUtil.extractUsername(token);
+//        User user = (User) this.userService.loadUserByUsername(email);
+//        System.out.println(user.getEmail());
+//        System.out.println(user.getFirstName());
+//        System.out.println("Print email from loaded user");
+//        System.out.println(user.getEmail());
+//
+//        System.out.println("Token form note controller");
+//        System.out.println(token);
+//        return this.noteService.findAll();
+//    }
 
-        HttpSession session = request.getSession();
-        String token = (String) session.getAttribute("token");
-        String email = this.jwtTokenUtil.extractUsername(token);
-        User user = (User) this.userService.loadUserByUsername(email);
-        System.out.println(user.getEmail());
-        System.out.println(user.getFirstName());
-        System.out.println("Print email from loaded user");
-        System.out.println(user.getEmail());
-
-        System.out.println("Token form note controller");
-        System.out.println(token);
-        return this.noteService.findAll();
-    }
 
 }

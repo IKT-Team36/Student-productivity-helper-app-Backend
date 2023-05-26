@@ -22,7 +22,7 @@ public class ToDoDto {
 
     }
 
-    public ToDoDto(String toDoName, String toDoDetails, String toDoStatus, ZonedDateTime dateCreated, ZonedDateTime endDate, Long user, Long course) {
+    public ToDoDto(String toDoName, String toDoDetails, String toDoStatus, ZonedDateTime dateCreated, ZonedDateTime endDate,Long user, Long course) {
         this.toDoName = toDoName;
         this.toDoDetails = toDoDetails;
         this.toDoStatus = toDoStatus;
