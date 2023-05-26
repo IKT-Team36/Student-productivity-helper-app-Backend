@@ -32,36 +32,47 @@ public class WebSecurityConfig {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
+    //    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http.csrf().disable();
+//        http.authorizeHttpRequests((authz) -> authz.requestMatchers("/api/v*/registration/*","/api",
+//                                "/login","/api/v1/registration","/api/v*/login","/api/v1/test/*","/api/v1/confirm",
+//                                "/api/v1/registration/confirm?token=*","api/v1/test/add","" +
+//                                        "/api/v1/attachment/*","/api/v1/attachment/add",
+//                                "/api/v1/attachment/delete","/api/v1/attachment/delete/{id}","" +
+//                                        "/api/v1/attachment/delete/*","/api/v1/attachment/edit/{id}",
+//                                "/api/v1/attachment/edit/*","/api/v1/attachment/edit/*","/api/v1/toDo",
+//                                "/api/v1/toDo/*",
+//                                "/api/v1/toDo/add","/api/v1/toDo/edit/*","/api/v1/toDo/delete/*","/api/v1/topic","/api/v1/topic/*","/api/v1/topic/edit","/api/v1/topic/edit/{id}",
+//                                "/api/v1/topic/edit/*","/api/v1/topic/delete","/api/v1/topic/delete/{id}","/api/v1/topic/delete/*","**").permitAll()
+//                        .anyRequest().authenticated())
+//                .formLogin();
+//        return http.build();
+//    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeHttpRequests((authz) -> authz.requestMatchers("/api/v*/registration/*","/api",
-                                "/login","/api/v1/registration","/api/v*/login","/api/v1/test/*","/api/v1/confirm",
-                                "/api/v1/registration/confirm?token=*","api/v1/test/add","" +
-                                        "/api/v1/attachment/*","/api/v1/attachment/add",
-                                "/api/v1/attachment/delete","/api/v1/attachment/delete/{id}","" +
-                                        "/api/v1/attachment/delete/*","/api/v1/attachment/edit/{id}",
-                                "/api/v1/attachment/edit/*","/api/v1/attachment/edit/*","/api/v1/toDo",
-                                "/api/v1/toDo/*",
-                                "/api/v1/toDo/add","/api/v1/toDo/edit/*","/api/v1/toDo/delete/*","/api/v1/topic","/api/v1/topic/*","/api/v1/topic/edit","/api/v1/topic/edit/{id}",
-                                "/api/v1/topic/edit/*","/api/v1/topic/delete","\"/api/v1/topic/delete/{id}","/api/v1/topic/delete/*").permitAll()
-                        .anyRequest().authenticated())
+        http.authorizeHttpRequests((authz) -> authz.requestMatchers("/**").permitAll())
                 .formLogin();
         return http.build();
     }
 
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
     @Bean
-    public AuthenticationManager authenticationManager2(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
     @Bean
     public AuthenticationManager authenticationManager() {
-
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userService);
+        authProvider.setUserDetailsService(userService); // Make sure userService implements UserDetailsService
         authProvider.setPasswordEncoder(bCryptPasswordEncoder);
 
-        List<AuthenticationProvider> providers =  List.of(authProvider);
+        List<AuthenticationProvider> providers = List.of(authProvider);
 
         return new ProviderManager(providers);
     }

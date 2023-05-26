@@ -6,6 +6,7 @@ import mk.ukim.finki.studentproductivityhelperapp.repository.UserRepository;
 import mk.ukim.finki.studentproductivityhelperapp.service.UserService;
 import mk.ukim.finki.studentproductivityhelperapp.service.token.ConfirmationToken;
 import mk.ukim.finki.studentproductivityhelperapp.service.token.ConfirmationTokenService;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,11 +30,11 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
         this.confirmationTokenService = confirmationTokenService;
     }
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException(email));
-    }
+//
+//    @Override
+//    public UserDetails findByEmail(String email) throws UsernameNotFoundException {
+//        return userRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException(email));
+//    }
 
     public List<User> findAll() {
         return this.userRepository.findAll();
@@ -70,4 +71,15 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findById(Long id) {
         return this.userRepository.findById(id);
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        // Build the UserDetails object using the User entity
+        List<GrantedAuthority> authorities = user.getAppUserRole().getAuthorities();
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, authorities);
+    }
+
 }
