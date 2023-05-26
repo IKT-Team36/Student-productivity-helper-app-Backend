@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "course", schema = "dbo")
 public class Course {
 
     @Id
@@ -23,6 +24,9 @@ public class Course {
     @Column(length = 20)
     private String courseStatus;
 
+    @Column(columnDefinition = "TINYINT", length = 1)
+    private int isDeleted = 0;
+
     @ManyToOne
     private User user;
 
@@ -30,4 +34,11 @@ public class Course {
 
     }
 
+    public Course(String name, String semester, String description, String courseStatus, User user) {
+        this.name = name;
+        this.semester = semester;
+        this.description = description;
+        this.courseStatus = courseStatus;
+        this.user = user;
+    }
 }
