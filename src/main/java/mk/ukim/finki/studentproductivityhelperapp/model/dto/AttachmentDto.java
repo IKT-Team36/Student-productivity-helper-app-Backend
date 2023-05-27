@@ -5,12 +5,13 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import mk.ukim.finki.studentproductivityhelperapp.model.User;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
+
 
 @Data
 public class AttachmentDto {
     private String name;
-    private ZonedDateTime date;
+    private Date date;
 
     private String subject;
 
@@ -23,7 +24,7 @@ public class AttachmentDto {
 
     }
 
-    public AttachmentDto(String name, ZonedDateTime date, String subject, String type, String byteContent, Long user) {
+    public AttachmentDto(String name, Date date, String subject, String type, String byteContent, Long user) {
         this.name = name;
         this.date = date;
         this.subject = subject;

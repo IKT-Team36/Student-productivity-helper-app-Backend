@@ -4,7 +4,7 @@ package mk.ukim.finki.studentproductivityhelperapp.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Data
 @Entity
@@ -15,7 +15,7 @@ public class Note {
     private Long noteId;
     @Column(length = 500)
     private String noteContent;
-    private ZonedDateTime dateModified;
+    private Date dateModified;
     @ManyToOne
     private User user;
     @ManyToOne
@@ -24,12 +24,12 @@ public class Note {
 
     }
 
-    public Note(String noteContent, ZonedDateTime dateModified) {
+    public Note(String noteContent, Date dateModified) {
         this.noteContent = noteContent;
         this.dateModified = dateModified;
     }
 
-    public Note(String noteContent, ZonedDateTime dateModified, User user, Course course) {
+    public Note(String noteContent, Date dateModified, User user, Course course) {
         this.noteContent = noteContent;
         this.dateModified = dateModified;
         this.user = user;

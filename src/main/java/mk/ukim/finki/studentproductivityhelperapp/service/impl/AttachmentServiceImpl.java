@@ -10,7 +10,7 @@ import mk.ukim.finki.studentproductivityhelperapp.repository.UserRepository;
 import mk.ukim.finki.studentproductivityhelperapp.service.AttachmentService;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +27,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 
     @Override
-    public Optional<Attachment> create(String name, ZonedDateTime date, String subject, String type, String byteContent, Long user) {
+    public Optional<Attachment> create(String name, Date date, String subject, String type, String byteContent, Long user) {
 
         User userNEW = this.userRepository.findById(user).orElseThrow(()->new UserNotFoundException(user));
         this.attachmentRepository.deleteByName(name);
@@ -36,7 +36,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public Optional<Attachment> edit(Long attachmentId,String name, ZonedDateTime date, String subject, String type, String byteContent,Long user) {
+    public Optional<Attachment> edit(Long attachmentId,String name, Date date, String subject, String type, String byteContent,Long user) {
         Attachment attachment = this.attachmentRepository.findById(attachmentId).orElseThrow(()->new AttachmentNotFoundException(attachmentId));
         attachment.setName(name);
         attachment.setDate(date);

@@ -5,7 +5,8 @@ package mk.ukim.finki.studentproductivityhelperapp.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
+
 
 @Data
 @Entity
@@ -16,7 +17,7 @@ public class Attachment {
     private Long attachmentId;
     @Column(length = 30)
     private String name;
-    private ZonedDateTime date;
+    private Date date;
     @Column(length = 50)
     private String subject;
     @Column(length = 50)
@@ -30,7 +31,7 @@ public class Attachment {
 
     }
 
-    public Attachment(String name, ZonedDateTime date, String subject, String type, String byteContent) {
+    public Attachment(String name, Date date, String subject, String type, String byteContent) {
         this.name = name;
         this.date = date;
         this.subject = subject;
@@ -38,7 +39,7 @@ public class Attachment {
         this.byteContent = byteContent;
     }
 
-    public Attachment(String name, ZonedDateTime date, String subject, String type, String byteContent, User user) {
+    public Attachment(String name, Date date, String subject, String type, String byteContent, User user) {
         this.name = name;
         this.date = date;
         this.subject = subject;

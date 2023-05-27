@@ -4,7 +4,7 @@ package mk.ukim.finki.studentproductivityhelperapp.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Data
 @Entity
@@ -19,8 +19,8 @@ public class ToDo {
     private String toDoDetails;
     @Column(length = 50)
     private String toDoStatus;
-    private ZonedDateTime dateCreated;
-    private ZonedDateTime endDate;
+    private Date dateCreated;
+    private Date endDate;
     @ManyToOne
     private User user;
     @ManyToOne
@@ -29,7 +29,7 @@ public class ToDo {
 
     }
 
-    public ToDo(String toDoName, String toDoDetails, String toDoStatus, ZonedDateTime dateCreated, ZonedDateTime endDate, User user, Course course) {
+    public ToDo(String toDoName, String toDoDetails, String toDoStatus, Date dateCreated, Date endDate, User user, Course course) {
         this.toDoName = toDoName;
         this.toDoDetails = toDoDetails;
         this.toDoStatus = toDoStatus;

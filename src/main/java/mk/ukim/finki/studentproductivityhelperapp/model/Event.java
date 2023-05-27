@@ -4,7 +4,7 @@ package mk.ukim.finki.studentproductivityhelperapp.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Data
 @Entity
@@ -18,7 +18,7 @@ public class Event {
     private String eventName;
     @Column(length = 100)
     private String eventLocation;
-    private ZonedDateTime eventDate;
+    private Date eventDate;
     @ManyToOne
     private User user;
     @ManyToOne
@@ -27,13 +27,13 @@ public class Event {
 
     }
 
-    public Event(String eventName, String eventLocation, ZonedDateTime eventDate) {
+    public Event(String eventName, String eventLocation, Date eventDate) {
         this.eventName = eventName;
         this.eventLocation = eventLocation;
         this.eventDate = eventDate;
     }
 
-    public Event(String eventName, String eventLocation, ZonedDateTime eventDate, User user, Course course) {
+    public Event(String eventName, String eventLocation, Date eventDate, User user, Course course) {
         this.eventName = eventName;
         this.eventLocation = eventLocation;
         this.eventDate = eventDate;

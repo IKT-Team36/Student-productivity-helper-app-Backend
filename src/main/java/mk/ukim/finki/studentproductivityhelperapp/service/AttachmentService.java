@@ -4,14 +4,14 @@ import mk.ukim.finki.studentproductivityhelperapp.model.Attachment;
 import mk.ukim.finki.studentproductivityhelperapp.model.User;
 import mk.ukim.finki.studentproductivityhelperapp.model.dto.AttachmentDto;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 public interface AttachmentService {
 
-    Optional<Attachment> create(String name, ZonedDateTime date, String subject, String type, String byteContent, Long user);
-    Optional<Attachment> edit (Long attachmentId,String name, ZonedDateTime date, String subject, String type, String byteContent, Long user);
+    Optional<Attachment> create(String name, Date date, String subject, String type, String byteContent, Long user);
+    Optional<Attachment> edit (Long attachmentId,String name, Date date, String subject, String type, String byteContent, Long user);
 
     Optional<Attachment> save(AttachmentDto attachmentDto);
 

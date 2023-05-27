@@ -5,7 +5,7 @@ import lombok.Data;
 import mk.ukim.finki.studentproductivityhelperapp.model.Course;
 import mk.ukim.finki.studentproductivityhelperapp.model.User;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Data
 public class ToDoDto {
@@ -14,15 +14,15 @@ public class ToDoDto {
     private String toDoName;
     private String toDoDetails;
     private String toDoStatus;
-    private ZonedDateTime dateCreated;
-    private ZonedDateTime endDate;
+    private Date dateCreated;
+    private Date endDate;
     private Long user;
     private Long course;
     public ToDoDto() {
 
     }
 
-    public ToDoDto(String toDoName, String toDoDetails, String toDoStatus, ZonedDateTime dateCreated, ZonedDateTime endDate,Long user, Long course) {
+    public ToDoDto(String toDoName, String toDoDetails, String toDoStatus, Date dateCreated, Date endDate,Long user, Long course) {
         this.toDoName = toDoName;
         this.toDoDetails = toDoDetails;
         this.toDoStatus = toDoStatus;

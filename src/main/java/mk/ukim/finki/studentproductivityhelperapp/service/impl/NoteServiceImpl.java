@@ -18,7 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +66,7 @@ public class NoteServiceImpl implements NoteService {
                 .orElseThrow(() -> new UserIdDoesNotExistException(noteDto.getUser()));
         Course course = this.courseRepository.findById(noteDto.getCourse())
                 .orElseThrow(() -> new CourseNotFoundException(noteDto.getCourse()));
-        Note note = new Note(noteDto.getNoteContent(), ZonedDateTime.now(),
+        Note note = new Note(noteDto.getNoteContent(), new Date(System.currentTimeMillis()),
                 user, course);
         this.noteRepository.save(note);
         return Optional.of(note);
@@ -76,7 +77,7 @@ public class NoteServiceImpl implements NoteService {
         Note note = this.noteRepository.findById(id)
                 .orElseThrow(() -> new NoteNotFoundException(id));
         note.setNoteContent(noteDto.getNoteContent());
-        note.setDateModified(ZonedDateTime.now());
+        note.setDateModified(new Date(System.currentTimeMillis()));
         this.noteRepository.save(note);
         return Optional.of(note);
     }
